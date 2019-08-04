@@ -1,3 +1,9 @@
+// get task list from firebase
+
+document.addEventListener("DOMContentLoaded", function(event) { 
+ console.log("document ready");
+});
+
 
 // click the button = insert new row with cells.
 
@@ -11,5 +17,12 @@ var cell2 = row.insertCell(1);
 
 cell1.innerHTML = '<input type ="text">' ;
 cell2.innerHTML = '<input type ="checkbox">'
-console.log(addTask);
+
 };
+
+// save task list to firebase
+
+function saveList() {
+
+};
+
