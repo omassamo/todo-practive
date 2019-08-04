@@ -10,18 +10,31 @@
 
 <!-- Initialize Firebase -->
 <script src="/__/firebase/init.js"></script>
+<script src="addTask.js"></script>
 </head>
 <body>
-	<table class="task-table">
-		<tr>
-			<th>
-				Task
-			</th>
-			<th>
-				Status
-			</th>
-		</tr>
-	</table>
+	<form>
+		<table id="task-table">
+			<tr>
+				<th>
+					Task
+				</th>
+				<th>
+					Status
+				</th>
+			</tr>
+			<tr class="task-row">
+				<td>
+					<input type="text"> 
+				</td>
+				<td>
+					<input type="checkbox">
+				</td>
+			</tr>	
+		</table>
+		<input type="submit" value="Save">
+	</form>
+	<button onclick="addTask()">Add task</button>
 </body>
 </html>
 
