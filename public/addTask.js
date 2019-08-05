@@ -1,12 +1,14 @@
-// get task list from firebase
 
+// Get a reference to the database service
+var database = firebase.database();
+
+// get task list from firebase
 document.addEventListener("DOMContentLoaded", function(event) { 
  console.log("document ready");
 });
 
 
 // click the button = insert new row with cells.
-
 function addTask (){
 
 var table = document.getElementById("task-table"); 
@@ -21,8 +23,4 @@ cell2.innerHTML = '<input type ="checkbox">'
 };
 
 // save task list to firebase
-
-function saveList() {
-
-};
 
