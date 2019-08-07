@@ -1,38 +1,43 @@
-// save 1 task with static content to firebase
-function addTask() {
+// wait for DOM to load
+// document.addEventListener("DOMContentLoaded", () => {
+// 	// Get a reference to the database service
 	
-	// // Get a reference to the database service
-	// var database = firebase.database();
-
-	console.log('addTask');
-
-	var data = JSON.stringify({
-	  "taskTest": {
-	    "status": true
-	  }
-	});
-
-	var xhr = new XMLHttpRequest();
-	xhr.withCredentials = true;
-
-	xhr.addEventListener("readystatechange", function () {
-	  if (this.readyState === this.DONE) {
-	    console.log(this.responseText);
-	  }
-	});
-
-	xhr.open("POST", "https://to-do-list-4990e.firebaseio.com/tasks.json");
-	xhr.setRequestHeader("content-type", "application/json");
-
-	xhr.send(data);
-
-};
-
-// // get task list from firebase - TO DO
-// document.addEventListener("DOMContentLoaded", function(event) { 
-//  console.log("document ready");
 // });
 
+// get existing task status firebase command
+function getTasks() {
+
+	var taskStatus = firebase.database().ref('/tasks');
+	taskStatus.on('value', function(snapshot) {
+	console.log(snapshot.val());
+	});
+};
+
+// post new task with firebase command
+
+function addTask(name, status) {
+	
+	var taskName = document.getElementById("taskName").value;
+	var taskStatus = document.getElementById("taskStatus").checked;
+
+	var postdata = {
+		name: taskName,
+		status: taskStatus
+	};
+
+console.log(postdata);	
+
+// Get a key for the task
+var newTaskKey = firebase.database().ref().child('tasks').push().key;
+console.log(newTaskKey);
+
+//write the new taskdaata
+var updates = {};
+updates['/tasks/' + newTaskKey] = postdata;
+
+return firebase.database().ref().update(updates);
+
+};
 
 // // click the button = insert new row with cells.
 // function addTask (){
@@ -43,7 +48,6 @@ function addTask() {
 // var cell1 = row.insertCell(0);
 // var cell2 = row.insertCell(1); 		
 
-// cell1.innerHTML = '<input type ="text">' ;
-// cell2.innerHTML = '<input type ="checkbox">'
+
 
 // };

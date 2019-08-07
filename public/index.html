@@ -2,17 +2,21 @@
 <html>
 <head>
 <title>To do</title>
- <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="/__/firebase/6.3.4/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#reserved-urls -->
-
-<!-- Initialize Firebase -->
-<script src="/__/firebase/init.js"></script>
 <script src="addTask.js"></script>
 </head>
 <body>
+	
+
+  	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  	<script src="/__/firebase/6.3.4/firebase-app.js"></script>
+
+  	<!-- Add Firebase products that you want to use -->
+  	<script src="/__/firebase/6.3.4/firebase-database.js"></script>
+
+	 <!-- Initialize Firebase -->
+  	<script src="/__/firebase/init.js"></script>
+   	<!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
 	<form>
 		<table id="task-table">
 			<tr>
@@ -25,7 +29,7 @@
 			</tr>
 			<tr class="task-row">
 				<td>
-					<input type="text" id="taskTitle"> 
+					<input type="text" id="taskName"> 
 				</td>
 				<td>
 					<input type="checkbox" id="taskStatus">
@@ -35,6 +39,7 @@
 	</form>
 <!-- 	<button onclick="saveList()">Save</button> -->
 	<button onclick="addTask()">Add task</button>
+	<button onclick="getTasks()">Get tasks</button>
 </body>
 </html>
 
