@@ -1,20 +1,22 @@
-// wait for DOM to load
-// document.addEventListener("DOMContentLoaded", () => {
-// 	// Get a reference to the database service
-	
-// });
+// wait for DOM to load and load tasks
+document.addEventListener("DOMContentLoaded", () => {
+	console.log("Ready");
 
-// get existing task status firebase command
-function getTasks() {
-
-	var taskStatus = firebase.database().ref('/tasks');
-	taskStatus.on('value', function(snapshot) {
-	console.log(snapshot.val());
+	// // Intitial -> Get tasks from firebase with value - gets all tasks in 1 object, but fetches all tasks again on update
+	var tasksJSON = firebase.database().ref('/tasks/');
+	tasksJSON.on('child_added', function(snapshot) {
+	var taskList = (snapshot.val());
+	console.log(taskList);
+	if (taskList.status = true) {
+		$("#task-table").append("<tr><td>" + "<input id='" + taskList.name + "' value='" + taskList.name + "'>" + "</input>" + "</td>" + "<td><input type='checkbox' checked></td></tr>");
+		} else {
+		$("#task-table").append("<tr><td>" + "<input id='" + taskList.name + "' value='" + taskList.name + "'>" + "</input>" + "</td>" + "<td><input type='checkbox'></td></tr>");
+		};
 	});
-};
+
+});
 
 // post new task with firebase command
-
 function addTask(name, status) {
 	
 	var taskName = document.getElementById("taskName").value;
@@ -25,17 +27,21 @@ function addTask(name, status) {
 		status: taskStatus
 	};
 
-console.log(postdata);	
+	console.log(postdata);	
 
-// Get a key for the task
-var newTaskKey = firebase.database().ref().child('tasks').push().key;
-console.log(newTaskKey);
+	// Get a key for the task
+	var newTaskKey = firebase.database().ref().child('tasks').push().key;
+	console.log(newTaskKey);
 
-//write the new taskdaata
-var updates = {};
-updates['/tasks/' + newTaskKey] = postdata;
+	//write the new taskdata
+	var updates = {};
+	updates['/tasks/' + newTaskKey] = postdata;
 
-return firebase.database().ref().update(updates);
+	document.getElementById("taskName").value = "";
+	$("#taskStatus").prop('checked', false);
+
+	return firebase.database().ref().update(updates);
+
 
 };
 
@@ -47,7 +53,3 @@ return firebase.database().ref().update(updates);
 // var row = table.insertRow(1);
 // var cell1 = row.insertCell(0);
 // var cell2 = row.insertCell(1); 		
-
-
-
-// };

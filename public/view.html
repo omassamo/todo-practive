@@ -1,12 +1,11 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <title>To do</title>
-<script src="addTask.js"></script>
+<script src="view.js"></script>
 </head>
 <body>
 	
-
   	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
   	<script src="/__/firebase/6.3.4/firebase-app.js"></script>
 
@@ -19,26 +18,6 @@
    	<!-- include jQuery -->
    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-	<table id="task-table">
-		<tr>
-			<th>
-				Task
-			</th>
-			<th>
-				Status
-			</th>
-		</tr>
-		<tr class="task-row">
-			<td>
-				<input type="text" id="taskName"> 
-			</td>
-			<td>
-				<input type="checkbox" id="taskStatus">
-			</td>
-		</tr>	
-	</table>
-	<button onclick="addTask()">Add task</button>
-	<div id="demotasks"></div>
+<div id="tasklist"></div>
 </body>
 </html>
-
