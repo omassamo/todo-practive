@@ -47,7 +47,6 @@ function addTask(name, status) {
 };
 
 // Update status of task when user checks & unchecks checkbox
-
 function updateStatus (clicked_id) {
 
 	console.log(clicked_id);
