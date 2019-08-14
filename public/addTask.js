@@ -2,15 +2,16 @@
 document.addEventListener("DOMContentLoaded", () => {
 	console.log("Ready");
 
-	// // Intitial -> Get tasks from firebase with value - gets all tasks in 1 object, but fetches all tasks again on update
+// Intitial -> Get tasks from firebase and update when child added
 	var tasksJSON = firebase.database().ref('/tasks/');
 	tasksJSON.on('child_added', function(snapshot) {
 	var taskList = (snapshot.val());
+	taskKey = snapshot.key;
 	console.log(taskList);
-	if (taskList.status = true) {
-		$("#task-table").append("<tr><td>" + "<input id='" + taskList.name + "' value='" + taskList.name + "'>" + "</input>" + "</td>" + "<td><input type='checkbox' checked></td></tr>");
+	if (taskList.status == true) {
+		$("#task-table").append("<tr><td>" + "<input id='" + taskList.name + "' value='" + taskList.name + "'>" + "</input>" + "</td>" + "<td><input onclick='updateStatus(this.id)' type='checkbox' id='" + taskKey + "' checked></td></tr>");
 		} else {
-		$("#task-table").append("<tr><td>" + "<input id='" + taskList.name + "' value='" + taskList.name + "'>" + "</input>" + "</td>" + "<td><input type='checkbox'></td></tr>");
+		$("#task-table").append("<tr><td>" + "<input id='" + taskList.name + "' value='" + taskList.name + "'>" + "</input>" + "</td>" + "<td><input onclick='updateStatus(this.id)' type='checkbox' id='" + taskKey + "'></td></tr>");
 		};
 	});
 
@@ -22,7 +23,7 @@ function addTask(name, status) {
 	var taskName = document.getElementById("taskName").value;
 	var taskStatus = document.getElementById("taskStatus").checked;
 
-	var postdata = {
+	var postData = {
 		name: taskName,
 		status: taskStatus
 	};
@@ -35,13 +36,32 @@ function addTask(name, status) {
 
 	//write the new taskdata
 	var updates = {};
-	updates['/tasks/' + newTaskKey] = postdata;
+	updates['/tasks/' + newTaskKey] = postData;
 
+	//clear new task input field and checkmark
 	document.getElementById("taskName").value = "";
 	$("#taskStatus").prop('checked', false);
 
 	return firebase.database().ref().update(updates);
 
+};
+
+// Update status of task when user checks & unchecks checkbox
+
+function updateStatus (clicked_id) {
+
+	console.log(clicked_id);
+
+	var x = document.getElementById(clicked_id).checked;
+	console.log(x);
+
+	if (x == true) {
+	
+	//Update specific tasks' status. TODO status get status and key dynamically.
+	return firebase.database().ref('/tasks/' + clicked_id).update({"status": true});
+	} else {
+	return firebase.database().ref('/tasks/' + clicked_id).update({"status": false});
+	}; 
 
 };
 
