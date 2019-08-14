@@ -28,7 +28,7 @@ function addTask(name, status) {
 		status: taskStatus
 	};
 
-	console.log(postdata);	
+	console.log(postData);	
 
 	// Get a key for the task
 	var newTaskKey = firebase.database().ref().child('tasks').push().key;
@@ -64,11 +64,5 @@ function updateStatus (clicked_id) {
 
 };
 
-// // click the button = insert new row with cells.
-// function addTask (){
+// Update task name when user types a new name 
 
-// var table = document.getElementById("task-table"); 
-
-// var row = table.insertRow(1);
-// var cell1 = row.insertCell(0);
-// var cell2 = row.insertCell(1); 		
