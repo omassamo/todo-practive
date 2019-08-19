@@ -12,3 +12,4 @@
 		// 	// console.log(taskList1[i].name);
 		// 	$("#task-table").append("<tr><td>" + "<input " + "value='" + taskList[i].name + "'>" + "</input>" + "</td>" + "<td><input type='checkbox'></td></tr>");
 		// });
+	
