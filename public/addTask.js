@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	console.log("Ready");
 
 // Intitial -> Get tasks from firebase and update when child added - sorting is not really workingter
+// I should have event_listeners updating the list on child_removed and child_updated
 	var tasksJSON = firebase.database().ref('tasks').orderByChild('timestamp');
 	tasksJSON.on('child_added', function updateList (snapshot) {
 		var taskList = (snapshot.val());
@@ -81,7 +82,7 @@ function updateName (name) {
 
 };
 
-//delete task from firebase and remove table row ✅
+//delete task from firebase and remove table row - this is cheating as it'll only work if user has only 1 page of list open. Should be a proper firebase update✅
 function deleteTask (task) {
 	//get parent id
 	var parentId = task.parentNode.parentNode.id;
