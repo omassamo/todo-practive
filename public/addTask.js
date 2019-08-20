@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	console.log("Ready");
 
 // Intitial -> Get tasks from firebase and update when child added - sorting is not really workingter
-// Add a lister for child_removed
 	var tasksJSON = firebase.database().ref('tasks').orderByChild('timestamp');
 	tasksJSON.on('child_added', function updateList (snapshot) {
 		var taskList = (snapshot.val());
@@ -14,28 +13,19 @@ document.addEventListener("DOMContentLoaded", () => {
 			} else {
 			$("#task-table").append("<tr id='" + taskKey + "'><td>" + "<input oninput='updateName(this)' id='text-" + taskKey + "'value='" + taskList.name + "'>" + "</input>" + "</td>" + "<td><input onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox'></td><td><button onclick='deleteTask(this)'>❌</button></td></tr>");
 			};
-	
-	// // get info about removed node
-	// tasksJSON.on('child_removed', function(snapshot){
-	// 	var removedChild = (snapshot.val());
-	// 	console.log(removedChild);	
-	// 	removedChildKey = snapshot.key;
-	// 	console.log(removedChildKey);
-	// 	updateList();
-	// });
-
 
 	});
-
-	// make a var which contains the list - update that on either ch
 
 });
 
 // post new task with firebase command
 function addTask(name, status) {
 	
-	var taskName = document.getElementById("taskName").value;
-	var taskStatus = document.getElementById("taskStatus").checked;
+	var taskName = document.getElementById("newTaskName").value;
+	var taskStatus = document.getElementById("newTaskStatus").checked;
+	//clear new task input field and checkmark 
+	document.getElementById("newTaskName").value = "";
+	$("#newTaskStatus").prop('checked', false);
 
 	var postData = {
 		name: taskName,
@@ -56,20 +46,19 @@ function addTask(name, status) {
 	//write the new taskdata
 	return firebase.database().ref().update(updates);
 
-	//clear new task input field and checkmark - NOT working for some reason ?? ❌
-	document.getElementById("taskName").value = "";
-	$("#taskStatus").prop('checked', false);
-
 };
 
 // Update status of task when user checks & unchecks checkbox - dirty trick with the id ✅
 function updateStatus (status) {
 
+	//get parent id
 	var parentId = status.parentNode.parentNode.id;
+	// the id of the checkbox
 	var elementId = "status-" + parentId;
+	// is the checkbox checked?
 	var x = document.getElementById(elementId).checked;
 	console.log(x);
-
+	// Define the update based on if checkbox is/ is not checked - should be possible to just add x to the JSON instead of having the if/ else statement
 	if (x == true) {
 		return firebase.database().ref('/tasks/' + parentId).update({"status": true});
 		} else {
@@ -82,6 +71,7 @@ function updateStatus (status) {
 function updateName (name) {
 	// get parent parent id
 	var parentId = name.parentNode.parentNode.id;
+	// the id of the input
 	var elementId = "text-" + parentId;
 	//update the var task name
 	var taskName = document.getElementById(elementId).value;
@@ -93,8 +83,12 @@ function updateName (name) {
 
 //delete task from firebase and remove table row ✅
 function deleteTask (task) {
+	//get parent id
 	var parentId = task.parentNode.parentNode.id;
+	// the id of the delete button
 	var parentElement = document.getElementById(parentId);
+	//remove the parent element
 	$(parentElement).remove();
+	//remove the element from firebase
 	return firebase.database().ref('/tasks/' + parentId).remove();
 };
