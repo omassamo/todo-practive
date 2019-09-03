@@ -53,6 +53,14 @@ function addTask(name, status) {
 	return firebase.database().ref().update(updates);
 };
 
+// addTask on return
+var taskNameInput = document.getElementById("newTaskName"); 
+taskNameInput.addEventListener("keyup", function(event) {
+	if (event.keyCode === 13) {
+		document.getElementById("addTask").click();
+	}
+});
+
 // Update status of task when user checks & unchecks checkbox - dirty trick with the id ✅
 function updateStatus (status) {
 
