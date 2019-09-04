@@ -8,6 +8,8 @@
 <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/4.1.0/firebaseui.css" />
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- CSS -->
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
   	<!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
@@ -22,16 +24,23 @@
    	<!-- include jQuery -->
    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
-	<table id="task-table">
-		<tr>	
-			<td>
-				<input type="text" id="newTaskName"> </br><button id="addTask" onclick="addTask()">Add task</button>
-			</td>
-			<td>
-				<input type="checkbox" id="newTaskStatus">
-			</td>
-		</tr>	
-	</table>
+   	<div class="container text-center">
+   		<div class="col-md-12 text-center">
+			<table id="task-table">
+				<tr>	
+					<td>
+						<input class="taskNameField" type="text" id="newTaskName" onkeyup="keyUpTask()" ></br>
+					</td>
+<!-- 					<td>
+						<input type="checkbox" id="newTaskStatus">
+					</td> -->
+					<td>
+						<div id="addTask" onclick="addTask()"></div>
+					</td>
+				</tr>	
+			</table>
+		</div>
+	</container>
 </body>
 </html>
 

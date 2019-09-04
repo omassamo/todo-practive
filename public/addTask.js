@@ -16,9 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		taskKey = snapshot.key;
 		console.log(taskList);
 		if (taskList.status == true) {
-			$("#task-table").append("<tr id='" + taskKey + "'><td>" + "<input oninput='updateName(this)' id='text-" + taskKey + "'value='" + taskList.name + "'>" + "</input>" + "</td>" + "<td><input onclick='updateStatus(this)'  id='status-" + taskKey + "' type='checkbox' checked></td><td><button onclick='deleteTask(this)'>❌</button></td></tr>");
+			$("#task-table").append("<tr id='" + taskKey + "'><td>" + "<input oninput='updateName(this)' id='text-" + taskKey + "'value='" + taskList.name + "'>" + "</input>" + "</td>" + "<td><input onclick='updateStatus(this)'  id='status-" + taskKey + "' type='checkbox' checked></td><td><div onclick='deleteTask(this)'>❌</div></td></tr>");
 			} else {
-			$("#task-table").append("<tr id='" + taskKey + "'><td>" + "<input oninput='updateName(this)' id='text-" + taskKey + "'value='" + taskList.name + "'>" + "</input>" + "</td>" + "<td><input onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox'></td><td><button onclick='deleteTask(this)'>❌</button></td></tr>");
+			$("#task-table").append("<tr id='" + taskKey + "'><td>" + "<input oninput='updateName(this)' id='text-" + taskKey + "'value='" + taskList.name + "'>" + "</input>" + "</td>" + "<td><input onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox'></td><td><div onclick='deleteTask(this)'>❌</div></td></tr>");
 		};
 	});
 
@@ -28,14 +28,14 @@ document.addEventListener("DOMContentLoaded", () => {
 function addTask(name, status) {
 	
 	var taskName = document.getElementById("newTaskName").value;
-	var taskStatus = document.getElementById("newTaskStatus").checked;
+	// var taskStatus = document.getElementById("newTaskStatus").checked;
 	//clear new task input field and checkmark 
 	document.getElementById("newTaskName").value = "";
-	$("#newTaskStatus").prop('checked', false);
+	// $("#newTaskStatus").prop('checked', false);
 
 	var postData = {
 		name: taskName,
-		status: taskStatus,
+		// status: taskStatus,
 		timestamp: Date.now()
 	};
 
@@ -53,13 +53,14 @@ function addTask(name, status) {
 	return firebase.database().ref().update(updates);
 };
 
-// addTask on return
-var taskNameInput = document.getElementById("newTaskName"); 
-taskNameInput.addEventListener("keyup", function(event) {
+// addTask on return - doesnt work
+function keyUpTask () {
 	if (event.keyCode === 13) {
 		document.getElementById("addTask").click();
-	}
-});
+		console.log("keyUp");
+	};
+};	
+
 
 // Update status of task when user checks & unchecks checkbox - dirty trick with the id ✅
 function updateStatus (status) {
