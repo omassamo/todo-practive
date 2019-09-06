@@ -9,9 +9,13 @@ input {
 	border-bottom: solid 1px;
 }
 
-/*td {
+input:focus {
+	outline: none;
+}
+
+td {
 	padding: 10px;
-}*/
+}
 
 /*.taskNameField {
 	width:300px;

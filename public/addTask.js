@@ -7,6 +7,7 @@ var status = "status";
 // wait for DOM to load and load tasks
 document.addEventListener("DOMContentLoaded", () => {
 	console.log("Ready");
+	document.getElementById("newTaskName").focus();
 
 // Intitial -> Get tasks from firebase and update when child added - sorting is not really workingter
 // I should have event_listeners updating the list on child_removed and child_updated instead of using Javscript to update the DOM
@@ -16,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		taskKey = snapshot.key;
 		console.log(taskList);
 		if (taskList.status == true) {
-			$("#task-table").append("<tr id='" + taskKey + "'><td><input onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox' checked></td><td><input oninput='updateName(this)' id='text-" + taskKey + "'value='" + taskList.name + "'></input></td><td><div onclick='deleteTask(this)'>❌</div></td></tr>");
+			$("#task-table").append("<tr id='" + taskKey + "'><td><input class='' onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox' checked></td><td><input oninput='updateName(this)' id='text-" + taskKey + "'value='" + taskList.name + "'></input></td><td><div onclick='deleteTask(this)'>❌</div></td></tr>");
 			} else {
 			$("#task-table").append("<tr id='" + taskKey + "'><td><input onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox'></td><td><input oninput='updateName(this)' id='text-" + taskKey + "'value='" + taskList.name + "'></input></td>" + "<td><div onclick='deleteTask(this)'>❌</div></td></tr>");
 		};
@@ -53,7 +54,7 @@ function addTask(name, status) {
 	return firebase.database().ref().update(updates);
 };
 
-// addTask on return - doesnt work
+// addTask on return 
 function keyUpTask () {
 	if (event.keyCode === 13) {
 		document.getElementById("addTask").click();
