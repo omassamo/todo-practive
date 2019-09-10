@@ -2,14 +2,15 @@ body {
 	font-family: "courier"; 
 }
 
-input {
+textarea {
 	border-left: 0px;
 	border-right: 0px;
 	border-top: 0px;
 	border-bottom: solid 1px;
+	overflow: break-word;
 }
 
-input:focus {
+textarea:focus {
 	outline: none;
 }
 

@@ -17,9 +17,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		taskKey = snapshot.key;
 		console.log(taskList);
 		if (taskList.status == true) {
-			$("#task-table").append("<tr id='" + taskKey + "'><td><input class='' onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox' checked></td><td><input oninput='updateName(this)' id='text-" + taskKey + "'value='" + taskList.name + "'></input></td><td><div onclick='deleteTask(this)'>❌</div></td></tr>");
+			$("#task-table").append("<tr id='" + taskKey + "'><td><input class='' onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox' checked></td><td><textarea rows='1' cols='50' oninput='updateName(this)' id='text-" + taskKey  + "'>" + taskList.name + "</textarea></td><td><div onclick='deleteTask(this)'>❌</div></td></tr>");
 			} else {
-			$("#task-table").append("<tr id='" + taskKey + "'><td><input onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox'></td><td><input oninput='updateName(this)' id='text-" + taskKey + "'value='" + taskList.name + "'></input></td>" + "<td><div onclick='deleteTask(this)'>❌</div></td></tr>");
+			$("#task-table").append("<tr id='" + taskKey + "'><td><input onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox'></td><td><textarea rows='1' cols='50' oninput='updateName(this)' id='text-" + taskKey  + "'>" + taskList.name + "</textarea></td>" + "<td><div onclick='deleteTask(this)'>❌</div></td></tr>");
 		};
 	});
 
