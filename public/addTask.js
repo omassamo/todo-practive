@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		taskKey = snapshot.key;
 		console.log(taskList);
 		if (taskList.status == true) {
-			$("#task-table").append("<tr id='" + taskKey + "'><td><input class='' onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox' checked></td><td><textarea rows='1' cols='50' oninput='updateName(this)' id='text-" + taskKey  + "'>" + taskList.name + "</textarea></td><td><div onclick='deleteTask(this)'>❌</div></td></tr>");
+			$("#task-table").append("<tr id='" + taskKey + "'><td><input class='' onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox' checked></td><td><textarea style='text-decoration: line-through' rows='1' cols='50' oninput='updateName(this)' id='text-" + taskKey  + "'>" + taskList.name + "</textarea></td><td><div onclick='deleteTask(this)'>❌</div></td></tr>");
 			} else {
 			$("#task-table").append("<tr id='" + taskKey + "'><td><input onclick='updateStatus(this)' id='status-" + taskKey + "' type='checkbox'></td><td><textarea rows='1' cols='50' oninput='updateName(this)' id='text-" + taskKey  + "'>" + taskList.name + "</textarea></td>" + "<td><div onclick='deleteTask(this)'>❌</div></td></tr>");
 		};
@@ -52,7 +52,7 @@ function addTask(name, status) {
 
 	//write the new taskdata
 	return firebase.database().ref().update(updates);
-};
+}
 
 // addTask on return 
 function keyUpTask () {
@@ -60,23 +60,40 @@ function keyUpTask () {
 		document.getElementById("addTask").click();
 		console.log("keyUp");
 	};
-};	
+}	
 
 
 // Update status of task when user checks & unchecks checkbox - dirty trick with the id ✅
 function updateStatus (status) {
-
 	//get parent id
-	var parentId = status.parentNode.parentNode.id;
+	statusParentId = status.parentNode.parentNode.id;
 	// the id of the checkbox
-	var elementId = "status-" + parentId;
+	var elementId = "status-" + statusParentId;
 	// is the checkbox checked?
-	var x = document.getElementById(elementId).checked;
+	x = document.getElementById(elementId).checked;
 	console.log(x);
+	// // call  strikethrough 
+	strikeThrough();
 	// update status in firebase
-	return firebase.database().ref(mainPath + parentId).update({status: x});
-};	
- 
+	return firebase.database().ref(mainPath + statusParentId).update({status: x});
+}	
+
+// Toggle strikethrough based in toggle of task status
+function strikeThrough () {
+	console.log("strikeThrough");
+	// the id of the textarea 
+	var textAreaId = "text-" + statusParentId;
+	var taskName = document.getElementById(textAreaId);
+	console.log(textAreaId);
+	console.log(x);
+	//Strike through the text - need to be set based on value of x ⬇️ IN PROGRESSS! 
+	if (x === true) {
+	taskName.style.textDecoration = 'line-through';
+	} else {
+		taskName.style.textDecoration = '';
+	};
+}
+	
 // Update task name when user types a new name - dirty trick with the id ✅
 function updateName (name) {
 	// get parent parent id
@@ -88,7 +105,7 @@ function updateName (name) {
 	
 	//update firebase with task name
 	return firebase.database().ref(mainPath + parentId).update({name: taskName});
-};
+}
 
 //delete task from firebase and remove table row - this is cheating as it'll only work if user has only 1 page of list open. Should be a proper firebase update✅
 function deleteTask (task) {
@@ -100,4 +117,4 @@ function deleteTask (task) {
 	parentElement.remove();
 	//remove the element from firebase
 	return firebase.database().ref(mainPath + parentId).remove();
-};
+}
