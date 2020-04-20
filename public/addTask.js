@@ -9,9 +9,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	console.log("Ready");
 	document.getElementById("newTaskName").focus();
 
-// Intitial -> Get tasks from firebase and update when child added - sorting is not really workingter
+// Intitial -> Get tasks from firebase and update when child added - sorting is not really working
 // I should have event_listeners updating the list on child_removed and child_updated instead of using Javscript to update the DOM
-	var tasksJSON = firebase.database().ref(mainRef	).orderByChild('timestamp');
+	var tasksJSON = firebase.database().ref(mainRef).orderByChild('timestamp');
 	tasksJSON.on('child_added', function updateList (snapshot) {
 		var taskList = (snapshot.val());
 		taskKey = snapshot.key;
@@ -29,14 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
 function addTask(name, status) {
 	
 	var taskName = document.getElementById("newTaskName").value;
-	// var taskStatus = document.getElementById("newTaskStatus").checked;
-	//clear new task input field and checkmark 
+	//clear new task input field
 	document.getElementById("newTaskName").value = "";
-	// $("#newTaskStatus").prop('checked', false);
 
 	var postData = {
 		name: taskName,
-		// status: taskStatus,
 		timestamp: Date.now()
 	};
 
@@ -86,7 +83,7 @@ function strikeThrough () {
 	var taskName = document.getElementById(textAreaId);
 	console.log(textAreaId);
 	console.log(x);
-	//Strike through the text - need to be set based on value of x ⬇️ IN PROGRESSS! 
+	//Strike through the text
 	if (x === true) {
 	taskName.style.textDecoration = 'line-through';
 	} else {
